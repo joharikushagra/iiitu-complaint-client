@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { axiosInstance } from "../utils/Axios";
+import { axiosInstance } from "../../utils/Axios";
 import { useRouter } from "next/router";
 
 const Login = (props) => {
@@ -44,7 +44,7 @@ const Login = (props) => {
           />
         </div>
         <article className="prose text-center prose-h1:text-gray-700 my-6">
-          <h1>IIITU Complaints Portal</h1>
+          <h1>IIITU Complaints Portal Admin Login</h1>
         </article>
         <div className="mb-4">
           <label
