@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "./Card";
 
-const ViewComplaints = ({ children }) => {
+const ViewComplaints = ({ children, dropdown }) => {
   return (
     <div className="flex flex-col flex-1 w-0 overflow-hidden">
       <main className="relative flex-1 overflow-y-auto focus:outline-none">
@@ -10,10 +10,12 @@ const ViewComplaints = ({ children }) => {
             {/* <h1 className="text-lg text-neutral-600">
               Here is where you put your stuff
             </h1> */}
-            {children}
+            {dropdown}
           </div>
           <div className="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">
-            <Card />
+            <div className="grid grid-cols-1 gap-12 lg:gap-24 lg:grid-cols-2">
+              {children}
+            </div>
           </div>
         </div>
       </main>
