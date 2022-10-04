@@ -24,12 +24,15 @@ const Login = (props) => {
       .post("/auth/login", payload)
       .then((res) => {
         if (res?.status === 200) {
-          // auth.setAuthState({ role: 2 });
+          auth.setAuthState({ role: 2, email: res?.data?.email });
           router.push("/complaints");
-        } else window.alert(res?.data?.message);
+        } else {
+          console.log(res);
+        }
       })
       .catch((err) => {
-        window.alert(err.response?.data?.message);
+        console.log({ err });
+        // window.alert(err.response?.data?.message);
       });
   };
 

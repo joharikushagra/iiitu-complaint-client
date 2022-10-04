@@ -25,7 +25,8 @@ const Login = (props) => {
         else window.alert(res?.data?.message);
       })
       .catch((err) => {
-        window.alert(err.response?.data?.message);
+        console.error(err);
+        // window.alert(err.response?.data?.message);
       });
   };
 

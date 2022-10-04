@@ -31,11 +31,12 @@ const Signup = (props) => {
       .post("/users", payload)
       .then((res) => {
         console.log({ res });
-        window.alert(res?.data?.message);
+        // window.alert(res?.data?.message);
         window.location.replace("/Login");
       })
       .catch((err) => {
-        window.alert(err.response?.data?.message);
+        console.error(err);
+        // window.alert(err.response?.data?.message);
       });
   };
   return (

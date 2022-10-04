@@ -1,28 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { axiosInstance } from "../utils/Axios";
+import { useRouter } from "next/router";
 
 const AuthContext = React.createContext(null);
 const { Provider } = AuthContext;
 
 const AuthProvider = ({ children }) => {
-  const [authState, setAuthState] = useState({ role: "" });
+  const router = useRouter();
+  const [authState, setAuthState] = useState({ role: "", email: "" });
 
   const isUserAuthenticated = () => {
     if (!authState.role) return 0;
     return 1;
   };
 
-  //   useEffect(() => {
-  //     axiosInstance
-  //       .get("/auth/autoLogin")
-  //       .then((res) => {
-  //         if (res?.data?.loggedIn) {
-  //           auth.setAuthState({ role: res?.data?.role });
-  //           router.push("/complaints");
-  //         } else window.alert("res?.data?.message");
-  //       })
-  //       .catch((err) => window.alert("err.response?.data?.message"));
-  //   }, []);
+  console.log({ authState });
+
+  useEffect(() => {
+    axiosInstance
+      .get("/auth/autoLogin")
+      .then((res) => {
+        if (res.data.loggedIn) {
+          auth.setAuthState({ role: res.data.role, email: res.data.email });
+          router.push("/complaints");
+        } else {
+          router.push("/Login");
+        }
+      })
+      .catch((err) => {
+        router.push("/Login");
+      });
+  }, []);
 
   return (
     <Provider

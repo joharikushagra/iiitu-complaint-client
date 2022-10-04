@@ -3,7 +3,7 @@ import Layout from "../../components/Layout";
 import ViewComplaints from "../../components/ViewComplaints";
 import NewComplaint from "../../components/NewComplaint";
 import { useRouter } from "next/router";
-import { AuthContext } from "../../context/auth";
+import { AuthContext, AuthProvider } from "../../context/auth";
 import Login from "../Login";
 import Card from "../../components/Card";
 
@@ -26,17 +26,19 @@ const Complaints = () => {
   // }, []);
 
   return (
-    <Layout tabs={tabs}>
-      {!isCreate ? (
-        <ViewComplaints>
-          <Card id={1} />
-          <Card id={2} />
-          <Card id={3} />
-        </ViewComplaints>
-      ) : (
-        <NewComplaint />
-      )}
-    </Layout>
+    <AuthProvider>
+      <Layout tabs={tabs}>
+        {!isCreate ? (
+          <ViewComplaints>
+            <Card id={1} />
+            <Card id={2} />
+            <Card id={3} />
+          </ViewComplaints>
+        ) : (
+          <NewComplaint />
+        )}
+      </Layout>
+    </AuthProvider>
   );
 };
 
