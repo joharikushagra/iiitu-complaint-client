@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import ViewComplaints from "../../components/ViewComplaints";
+import { axiosInstance } from "../../utils/Axios";
 
 const tabs = [
   { name: "My Complaints", href: "/complaints" },
@@ -11,7 +12,17 @@ const tabs = [
 
 const ComplaintDetails = () => {
   const router = useRouter();
-  const id = router.query.complaintId;
+  const { complaintId } = router.query;
+  const [complaintDetails, setComplaintDetails] = useState(null);
+
+  useEffect(() => {
+    if (!complaintId) return;
+    axiosInstance
+      .get(`/complaint/${complaintId}`)
+      .then((res) => setComplaintDetails(res?.data?.complaint))
+      .catch((err) => console.log({ err }));
+  }, [complaintId]);
+
   return (
     <Layout tabs={tabs}>
       <ViewComplaints>
@@ -23,33 +34,22 @@ const ComplaintDetails = () => {
                   <div className="block text-lg font-medium text-gray-700">
                     Complaint Type
                   </div>
-                  <div>Electrical</div>
+                  <div>{complaintDetails?.type}</div>
                 </div>
                 <div className="col-span-6 sm:col-span-4">
                   <div className="block text-lg font-medium text-gray-700">
                     Complaint
                   </div>
-                  <div>
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industrys
-                    standard dummy text ever since the 1500s, when an unknown
-                    printer took a galley of type and scrambled it to make a
-                    type specimen book. It has survived not only five centuries,
-                    but also the leap into electronic typesetting, remaining
-                    essentially unchanged. It was popularised in the 1960s with
-                    the release of Letraset sheets containing Lorem Ipsum
-                    passages, and more recently with desktop publishing software
-                    like Aldus PageMaker including versions of Lorem Ipsum.
-                  </div>
+                  <div>{complaintDetails?.complaint}</div>
                 </div>
                 <div className="col-span-6 sm:col-span-4">
                   <div className="block tex t-lg font-medium text-gray-700">
                     Attachments/Links{" "}
                   </div>
                   <ul>
-                    <li>A</li>
-                    <li>B</li>
-                    <li>C</li>
+                    {complaintDetails?.links?.map((link) => (
+                      <li key={link}>{link}</li>
+                    ))}
                   </ul>
                 </div>
               </div>
@@ -62,7 +62,7 @@ const ComplaintDetails = () => {
                 type="submit"
                 className="inline-flex justify-center rounded-md border border-transparent bg-red-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
-                Pending
+                {complaintDetails?.status}
               </div>
             </div>
           </div>

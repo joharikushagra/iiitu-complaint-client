@@ -1,6 +1,6 @@
 import React from "react";
 
-const Card = ({ id }) => {
+const Card = ({ id, complaint }) => {
   return (
     <section>
       <div className="sm:flex lg:items-start group">
@@ -12,18 +12,17 @@ const Card = ({ id }) => {
             /> */}
         </div>
         <div className="cursor-pointer">
-          <span className="text-sm text-gray-500">August 20.20.21</span>
+          <span className="text-sm text-gray-500">{complaint.createdAt}</span>
           <p className="mt-3 text-lg font-medium leading-6">
             <a
               href={`/complaints/${id}`}
               className="text-xl text-gray-800 hover:text-gray-500"
             >
-              B2B Branding: 5 tips to go from boring to extraordinary{" "}
+              {complaint.type}
             </a>
           </p>
           <p className="mt-2 text leading-normal text-gray-500">
-            A wonderful serenity has taken possession of my entire soul, like
-            these sweet mornings of spring which I enjoy with my whole heart.
+            {complaint.complaint}
           </p>
         </div>
       </div>

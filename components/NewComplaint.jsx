@@ -1,21 +1,27 @@
+import { useRouter } from "next/router";
 import React from "react";
 import { axiosInstance } from "../utils/Axios";
 
 const NewComplaint = () => {
+  const router = useRouter();
   const handleSubmit = (e) => {
     e.preventDefault();
     const complaintType = e.target["complaint-type"].value;
     const complaintDescription = e.target["description"].value;
     const complaintLinks = e.target["links"]?.value?.split(",");
     const payload = {
-      complaintType,
-      complaintDescription,
-      complaintLinks,
+      type: complaintType,
+      complaint: complaintDescription,
+      links: complaintLinks,
     };
 
     axiosInstance
       .post("/complaints", payload)
-      .then((res) => console.log({ res }))
+      .then((res) => {
+        console.log({ res });
+        alert("Complaint Registered");
+        router.push("/complaints");
+      })
       .catch((err) => console.log(err.response));
   };
 

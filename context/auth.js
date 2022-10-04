@@ -9,28 +9,35 @@ const AuthProvider = ({ children }) => {
   const router = useRouter();
   const [authState, setAuthState] = useState({ role: "", email: "" });
 
+  function skipAuthCheck(path) {
+    const nonProtectedPages = ["/Login", "/Signup"];
+    if (nonProtectedPages.includes(path)) {
+      return true;
+    }
+
+    return false;
+  }
+
   const isUserAuthenticated = () => {
     if (!authState.role) return 0;
     return 1;
   };
 
-  console.log({ authState });
-
-  useEffect(() => {
-    axiosInstance
-      .get("/auth/autoLogin")
-      .then((res) => {
-        if (res.data.loggedIn) {
-          auth.setAuthState({ role: res.data.role, email: res.data.email });
-          router.push("/complaints");
-        } else {
-          router.push("/Login");
-        }
-      })
-      .catch((err) => {
-        router.push("/Login");
-      });
-  }, []);
+  // useEffect(() => {
+  //   axiosInstance
+  //     .get("/auth/autoLogin")
+  //     .then((res) => {
+  //       if (res.data.loggedIn) {
+  //         auth.setAuthState({ role: res.data.role, email: res.data.email });
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       if (!skipAuthCheck(router.pathname)) {
+  //         router.push("/Login");
+  //       }
+  //       // return;
+  //     });
+  // }, []);
 
   return (
     <Provider

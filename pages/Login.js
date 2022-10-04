@@ -24,7 +24,7 @@ const Login = (props) => {
       .post("/auth/login", payload)
       .then((res) => {
         if (res?.status === 200) {
-          auth.setAuthState({ role: 2, email: res?.data?.email });
+          auth.setAuthState({ role: res.data.role, email: res.data.email });
           router.push("/complaints");
         } else {
           console.log(res);
@@ -32,7 +32,6 @@ const Login = (props) => {
       })
       .catch((err) => {
         console.log({ err });
-        // window.alert(err.response?.data?.message);
       });
   };
 

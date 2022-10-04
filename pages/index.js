@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { AuthProvider } from "../context/auth";
 import styles from "../styles/Home.module.css";
 import Login from "./Login";
 

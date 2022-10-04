@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { AuthContext, AuthProvider } from "../../context/auth";
 import Login from "../Login";
 import Card from "../../components/Card";
+import { axiosInstance } from "../../utils/Axios";
 
 const tabs = [
   { name: "My Complaints", href: "/complaints" },
@@ -18,27 +19,28 @@ const Complaints = () => {
   const create = router.query?.create;
   const isCreate = create === "true";
   const auth = useContext(AuthContext);
+  const [complaints, setComplaints] = useState(null);
 
-  // useEffect(() => {
-  //   auth.isUserAuthenticated()
-  //     ? router.push("/complaints")
-  //     : router.push("/Login");
-  // }, []);
+  useEffect(() => {
+    axiosInstance.get("/complaints").then((res) => {
+      console.log(res.data);
+      setComplaints(res.data.complains);
+    });
+  }, []);
 
   return (
-    <AuthProvider>
-      <Layout tabs={tabs}>
-        {!isCreate ? (
-          <ViewComplaints>
-            <Card id={1} />
-            <Card id={2} />
-            <Card id={3} />
-          </ViewComplaints>
-        ) : (
-          <NewComplaint />
-        )}
-      </Layout>
-    </AuthProvider>
+    <Layout tabs={tabs}>
+      {!isCreate ? (
+        <ViewComplaints>
+          {complaints &&
+            complaints.map((c) => (
+              <Card id={c._id} key={c._id} complaint={c} />
+            ))}
+        </ViewComplaints>
+      ) : (
+        <NewComplaint />
+      )}
+    </Layout>
   );
 };
 
