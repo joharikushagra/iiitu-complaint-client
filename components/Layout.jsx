@@ -1,21 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { StoreContext } from "../context/store";
 
 const Layout = ({ children, tabs }) => {
+  const store = useContext(StoreContext)
   return (
     <div className="flex overflow-hidden bg-white h-screen">
       <div className="hidden md:flex md:flex-shrink-0">
         <div className="flex flex-col w-64">
           <div className="flex flex-col flex-grow pt-5 overflow-y-auto bg-indigo-700 border-r">
             <div className="flex flex-col items-center flex-shrink-0 px-4">
-              <a
-                href="./index.html"
-                className="px-8 text-left focus:outline-none"
+              <Link
+                href="/"
               >
-                <h2 className="block p-2 text-xl font-medium tracking-tighter text-white transition duration-500 ease-in-out transform cursor-pointer hover:text-white">
-                  Dashboard
-                </h2>
-              </a>
+                <a className="px-8 text-left focus:outline-none"
+                 >
+                  <h2 className="block p-2 text-xl font-medium tracking-tighter text-white transition duration-500 ease-in-out transform cursor-pointer hover:text-white">
+                    Dashboard
+                  </h2>
+                </a>
+              </Link>
               <button className="hidden rounded-lg focus:outline-none focus:shadow-outline">
                 <svg
                   fill="currentColor"
@@ -39,10 +44,12 @@ const Layout = ({ children, tabs }) => {
               <nav className="flex-1 space-y-1 bg-indigo-700">
                 <ul>
                   <li className="cursor-pointer">
-                    <a
-                      className="inline-flex items-center w-full px-4 py-2 mt-1 text-base text-white transition duration-500 ease-in-out transform border-indigo-800 rounded-lg hover:border-indigo-800 focus:shadow-outline hover:bg-indigo-600"
+                    <Link
                       href={tabs[0].href}
                     >
+                      <a  
+                      className="inline-flex items-center w-full px-4 py-2 mt-1 text-base text-white transition duration-500 ease-in-out transform border-indigo-800 rounded-lg hover:border-indigo-800 focus:shadow-outline hover:bg-indigo-600"
+                      >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="w-4 h-4"
@@ -58,15 +65,18 @@ const Layout = ({ children, tabs }) => {
                         ></path> */}
                       </svg>
                       <span className="ml-4">
-                        Logged in as 19315@iiitu.ac.in
+                        Logged in as {store.state.user.email}
                       </span>
-                    </a>
+                      </a>
+                    </Link>
                   </li>
                   <li className="cursor-pointer">
-                    <a
-                      className="inline-flex items-center w-full px-4 py-2 mt-1 text-base text-white transition duration-500 ease-in-out transform border-indigo-800 rounded-lg hover:border-indigo-800 focus:shadow-outline hover:bg-indigo-600"
+                    <Link
                       href={tabs[0].href}
                     >
+                      <a
+                      className="inline-flex items-center w-full px-4 py-2 mt-1 text-base text-white transition duration-500 ease-in-out transform border-indigo-800 rounded-lg hover:border-indigo-800 focus:shadow-outline hover:bg-indigo-600"
+                      >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="w-4 h-4"
@@ -82,14 +92,18 @@ const Layout = ({ children, tabs }) => {
                         ></path>
                       </svg>
                       <span className="ml-4">{tabs[0].name}</span>
-                    </a>
+                      </a>
+                    </Link>
                   </li>
                   <li className="cursor-pointer">
-                    <a
-                      className="inline-flex items-center w-full px-4 py-2 mt-1 text-base text-white transition duration-500 ease-in-out transform border-indigo-800 rounded-lg hover:border-indigo-800 focus:shadow-outline hover:bg-indigo-600"
+                    <Link
                       href={tabs[1].href}
                       // href="/complaints?create=true"
                     >
+                      <a
+                      
+                      className="inline-flex items-center w-full px-4 py-2 mt-1 text-base text-white transition duration-500 ease-in-out transform border-indigo-800 rounded-lg hover:border-indigo-800 focus:shadow-outline hover:bg-indigo-600"
+                      >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="w-4 h-4"
@@ -105,14 +119,18 @@ const Layout = ({ children, tabs }) => {
                         ></path>
                       </svg>
                       <span className="ml-4">{tabs[1].name}</span>
-                    </a>
+                      </a>
+                    </Link>
                   </li>
                   <li className="cursor-pointer">
-                    <a
-                      className="inline-flex items-center w-full px-4 py-2 mt-1 text-base text-white transition duration-500 ease-in-out transform border-indigo-800 rounded-lg hover:border-indigo-800 focus:shadow-outline hover:bg-indigo-600"
+                    <Link
                       href={tabs[2].href}
                       // href="/complaints?create=true"
                     >
+                      <a
+                      
+                      className="inline-flex items-center w-full px-4 py-2 mt-1 text-base text-white transition duration-500 ease-in-out transform border-indigo-800 rounded-lg hover:border-indigo-800 focus:shadow-outline hover:bg-indigo-600"
+                      >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="w-4 h-4"
@@ -129,7 +147,8 @@ const Layout = ({ children, tabs }) => {
                       </svg>
 
                       <span className="ml-4">{tabs[2].name}</span>
-                    </a>
+                      </a>
+                    </Link>
                   </li>
                 </ul>
               </nav>

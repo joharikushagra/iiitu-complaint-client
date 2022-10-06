@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import axios from "axios";
 import { axiosInstance } from "../utils/Axios";
 
 const Signup = (props) => {

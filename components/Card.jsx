@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import Link from 'next/link'
+import { StoreContext } from "../context/store";
+import { roleCheck } from "../utils";
 
 const Card = ({ id, complaint }) => {
+  const store = useContext(StoreContext);
   return (
     <section>
       <div className="sm:flex lg:items-start group">
@@ -11,20 +15,19 @@ const Card = ({ id, complaint }) => {
               alt="text"
             /> */}
         </div>
-        <div className="cursor-pointer">
-          <span className="text-sm text-gray-500">{complaint.createdAt}</span>
-          <p className="mt-3 text-lg font-medium leading-6">
-            <a
-              href={`/complaints/${id}`}
-              className="text-xl text-gray-800 hover:text-gray-500"
-            >
-              {complaint.type}
-            </a>
-          </p>
-          <p className="mt-2 text leading-normal text-gray-500">
-            {complaint.complaint}
-          </p>
-        </div>
+        <Link href={`${roleCheck.isAdmin(store.state.user.role) ? `/admin/complaints/${id}` :  `/complaints/${id}`}`}>
+          <div className="cursor-pointer">
+            <span className="text-sm text-gray-500">{complaint.createdAt}</span>
+            <p className="mt-3 text-lg font-medium leading-6">
+              <a className="text-xl text-gray-800 hover:text-gray-500">
+                {complaint.type}
+              </a>
+            </p>
+            <p className="mt-2 text leading-normal text-gray-500">
+              {complaint.complaint}
+            </p>
+          </div>
+        </Link>
       </div>
 
       {/* <div className="sm:flex lg:items-start group">

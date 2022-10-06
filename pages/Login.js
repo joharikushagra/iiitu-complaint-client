@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import Image from "next/image";
-import { axiosInstance } from "../utils/Axios";
 import { useRouter } from "next/router";
-import { AuthContext } from "../context/auth";
+import { login } from "./lib/api";
+import { StoreContext } from "../context/store";
 
 const Login = (props) => {
   const router = useRouter();
-  const auth = useContext(AuthContext);
+  const store = useContext(StoreContext);
   const handleSubmit = (e) => {
     e.preventDefault();
     const email = e.target.email?.value;
@@ -20,19 +20,7 @@ const Login = (props) => {
       password,
     };
 
-    axiosInstance
-      .post("/auth/login", payload)
-      .then((res) => {
-        if (res?.status === 200) {
-          auth.setAuthState({ role: res.data.role, email: res.data.email });
-          router.push("/complaints");
-        } else {
-          console.log(res);
-        }
-      })
-      .catch((err) => {
-        console.log({ err });
-      });
+    login(payload, store.setState, router)
   };
 
   return (

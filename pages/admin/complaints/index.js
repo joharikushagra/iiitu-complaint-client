@@ -1,19 +1,22 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import Layout from "../../../components/Layout";
 import ViewComplaints from "../../../components/ViewComplaints";
-import { useRouter } from "next/router";
 import Card from "../../../components/Card";
+import { fetchAllComplaints } from "../../lib/api";
+import { StoreContext } from "../../../context/store";
 
 const tabs = [
   { name: "Pending", href: "/admin/complaints" },
   { name: "Progress", href: "/admin/complaints?progress=true" },
   { name: "Resolved", href: "/admin/complaints?resolved=true" },
-  { name: "Logout", href: "/admin/Login" },
+  { name: "Logout", href: "/logout" },
 ];
 
 const Complaints = () => {
-  const router = useRouter();
-  const create = router.query?.create;
+  const store =  useContext(StoreContext);
+  useEffect(() => {
+    fetchAllComplaints(store.setState)
+  }, []);
   return (
     <Layout tabs={tabs}>
       {" "}
@@ -40,9 +43,10 @@ const Complaints = () => {
           </div>
         }
       >
-        <Card id={1} />
-        <Card id={2} />
-        <Card id={3} />
+        {store.state.complaints &&
+            store.state.complaints.map((c) => (
+              <Card id={c._id} key={c._id} complaint={c} />
+            ))}
       </ViewComplaints>
     </Layout>
   );
